@@ -56,15 +56,6 @@ void loop()
         delay(200); 
     }
 }
- 
-//  forwards(CMtoSteps(50), 80);
-//  delay(1000);
-//  backwards(CMtoSteps(50), 80);
-//  delay(1000);
-//  right(CMtoSteps(50), 80);
-//  delay(1000);
-//  left(CMtoSteps(50), 80);
-//  delay(1000);
 
 //####################################################################################################
 // Interrupt Service Routines
