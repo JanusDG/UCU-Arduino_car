@@ -1,5 +1,5 @@
-const byte MOTOR_A = 3;  // Motor 2 Interrupt Pin - INT 1 - Right Motor
-const byte MOTOR_B = 2;  // Motor 1 Interrupt Pin - INT 0 - Left Motor
+const byte MOTOR_A = 3;  // Motor 2 Interrupt Pin - INT 3 - Right Motor
+const byte MOTOR_B = 2;  // Motor 1 Interrupt Pin - INT 2 - Left Motor
 
 // Constant for steps in disk ??????????????????????????????????????????????
 const float stepcount = 20.00;  // 20 Slots in disk, change if different
@@ -56,6 +56,7 @@ void loop()
         delay(200); 
     }
 }
+
 
 //####################################################################################################
 // Interrupt Service Routines
