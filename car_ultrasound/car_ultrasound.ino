@@ -1,6 +1,3 @@
-const byte MOTOR_A = 3;
-const byte MOTOR_B = 2;
-
 // Motor A
 int enA = 10;
 int in1 = 9;
@@ -74,12 +71,22 @@ void loop()
     left_distance = read_sound(leftTrigPin, leftEchoPin);
     right_distance = read_sound(rightTrigPin, rightEchoPin);
     
-    if (distance >= 15) {
-      forwards();
-      delay(200);
+    if (forward_distance >= forward) {
+        forwards();
+        delay(200);
     } else {
-      backwards();
-      delay(200);
+        if (left_distance > (left+10)) {
+            left();
+            delay(1000);
+            forwards();
+            delay(1000);
+        }
+        else if (right_distance > (right+10)) {
+            right();
+            delay(1000);
+            forwards();
+            delay(1000);
+        }
     }
 }
  
