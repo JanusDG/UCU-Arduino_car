@@ -1,5 +1,5 @@
-const byte MOTOR_A = 3;  // Motor 2 Interrupt Pin - INT 3 - Right Motor
-const byte MOTOR_B = 2;  // Motor 1 Interrupt Pin - INT 2 - Left Motor
+const byte MOTOR_A = 3;
+const byte MOTOR_B = 2;
 
 // Motor A
 int enA = 10;
@@ -11,9 +11,14 @@ int enB = 5;
 int in3 = 7;
 int in4 = 6;
 
-// Ultrasound detector
-int trigPin = 3;
-int echoPin = 2;
+// Ultrasound detectors
+int forwardTrigPin = 3;
+int forwardEchoPin = 2;
+int leftTrigPin;
+int leftEchoPin;
+int rightTrigPin;
+int rightEchoPin;
+
 
 // Prototypes
 void forwards();
@@ -25,18 +30,28 @@ void left();
 long duration;
 int distance;
 
+// Start variables
+int forward = 15;
+int left;
+int right;
+
 void setup() 
 {
-    pinMode(trigPin, OUTPUT);
-    pinMode(echoPin, INPUT);
+    pinMode(forwardTrigPin, OUTPUT);
+    pinMode(forwardEchoPin, INPUT);
+    pinMode(leftTrigPin, OUTPUT);
+    pinMode(leftEchoPin, INPUT);
+    pinMode(rightTrigPin, OUTPUT);
+    pinMode(rightEchoPin, INPUT);
 
     analogWrite(enA, 45);
     analogWrite(enB, 45);
+
+    left = read_sound(leftTrigPin, leftEchoPin);
+    right = read_sound(rightTrigPin, rightEchoPin);
 }
 
-
-void loop()
-{ 
+int read_sound(trigPin, echoPin){
     // Clear the trigPin by setting it to LOW:
     digitalWrite(trigPin, LOW);
     delayMicroseconds(5);
@@ -50,17 +65,22 @@ void loop()
     duration = pulseIn(echoPin, HIGH);
     // Calculate the distance:
     distance = (duration)/58;
+}
+
+
+void loop()
+{   
+    forward_distance = read_sound(forwardTrigPin, forwardEchoPin);
+    left_distance = read_sound(leftTrigPin, leftEchoPin);
+    right_distance = read_sound(rightTrigPin, rightEchoPin);
     
-    if (distance < 15) {
-      forwards(); 
+    if (distance >= 15) {
+      forwards();
       delay(200);
-    }
-    else {
+    } else {
       backwards();
       delay(200);
     }
-
-    delay(100);
 }
  
 //####################################################################################################
