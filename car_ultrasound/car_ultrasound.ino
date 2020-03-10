@@ -1,12 +1,12 @@
 // Motor A
-int enA = 10;
-int in1 = 9;
-int in2 = 8;
+int enA = 22;
+int in1 = 24;
+int in2 = 26;
 
 // Motor B
-int enB = 5;
-int in3 = 7;
-int in4 = 6;
+int enB = 23;
+int in3 = 25;
+int in4 = 27;
 
 // Ultrasound detectors
 int forwardTrigPin = 3;
@@ -15,7 +15,6 @@ int leftTrigPin;
 int leftEchoPin;
 int rightTrigPin;
 int rightEchoPin;
-
 
 // Prototypes
 void forwards();
@@ -41,8 +40,8 @@ void setup()
     pinMode(rightTrigPin, OUTPUT);
     pinMode(rightEchoPin, INPUT);
 
-    analogWrite(enA, 45);
-    analogWrite(enB, 45);
+    analogWrite(enA, 150);
+    analogWrite(enB, 150);
 
     left = read_sound(leftTrigPin, leftEchoPin);
     right = read_sound(rightTrigPin, rightEchoPin);
