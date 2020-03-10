@@ -11,10 +11,10 @@ int in4 = 27;
 // Ultrasound detectors
 int forwardTrigPin = 3;
 int forwardEchoPin = 2;
-int leftTrigPin;
-int leftEchoPin;
-int rightTrigPin;
-int rightEchoPin;
+int leftTrigPin = 18;
+int leftEchoPin = 19;
+int rightTrigPin = 16;
+int rightEchoPin = 17;
 
 // Prototypes
 void forwards();
@@ -28,26 +28,13 @@ int distance;
 
 // Start variables
 int forward = 15;
-int left;
-int right;
+int left_start;
+int right_start;
+int forward_distance;
+int left_distance;
+int right_distance;
 
-void setup() 
-{
-    pinMode(forwardTrigPin, OUTPUT);
-    pinMode(forwardEchoPin, INPUT);
-    pinMode(leftTrigPin, OUTPUT);
-    pinMode(leftEchoPin, INPUT);
-    pinMode(rightTrigPin, OUTPUT);
-    pinMode(rightEchoPin, INPUT);
-
-    analogWrite(enA, 150);
-    analogWrite(enB, 150);
-
-    left = read_sound(leftTrigPin, leftEchoPin);
-    right = read_sound(rightTrigPin, rightEchoPin);
-}
-
-int read_sound(trigPin, echoPin){
+int read_sound(int trigPin, int echoPin){
     // Clear the trigPin by setting it to LOW:
     digitalWrite(trigPin, LOW);
     delayMicroseconds(5);
@@ -61,12 +48,29 @@ int read_sound(trigPin, echoPin){
     duration = pulseIn(echoPin, HIGH);
     // Calculate the distance:
     distance = (duration)/58;
+
+    return distance;
 }
 
+void setup() 
+{
+    pinMode(forwardTrigPin, OUTPUT);
+    pinMode(forwardEchoPin, INPUT);
+    pinMode(leftTrigPin, OUTPUT);
+    pinMode(leftEchoPin, INPUT);
+    pinMode(rightTrigPin, OUTPUT);
+    pinMode(rightEchoPin, INPUT);
+
+    analogWrite(enA, 150);
+    analogWrite(enB, 150);
+
+    left_start = read_sound(leftTrigPin, leftEchoPin);
+    right_start = read_sound(rightTrigPin, rightEchoPin);
+}
 
 void loop()
 {   
-    forward_distance = read_sound(forwardTrigPin, forwardEchoPin);
+    int forward_distance = read_sound(forwardTrigPin, forwardEchoPin);
     left_distance = read_sound(leftTrigPin, leftEchoPin);
     right_distance = read_sound(rightTrigPin, rightEchoPin);
     
@@ -74,13 +78,13 @@ void loop()
         forwards();
         delay(200);
     } else {
-        if (left_distance > (left+10)) {
+        if (left_distance > (left_start+10)) {
             left();
             delay(1000);
             forwards();
             delay(1000);
         }
-        else if (right_distance > (right+10)) {
+        else if (right_distance > (right_start+10)) {
             right();
             delay(1000);
             forwards();
