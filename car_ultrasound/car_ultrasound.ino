@@ -17,10 +17,10 @@ int rightTrigPin = 16;
 int rightEchoPin = 17;
 
 // Prototypes
-void forwards();
-void backwards();
-void right();
-void left();
+void drive_forwards();
+void drive_backwards();
+void drive_right();
+void drive_left();
  
 // Ultrasound variables
 long duration;
@@ -52,6 +52,7 @@ int read_sound(int trigPin, int echoPin){
     return distance;
 }
 
+
 void setup() 
 {
     pinMode(forwardTrigPin, OUTPUT);
@@ -61,12 +62,15 @@ void setup()
     pinMode(rightTrigPin, OUTPUT);
     pinMode(rightEchoPin, INPUT);
 
-    analogWrite(enA, 150);
-    analogWrite(enB, 150);
+    analogWrite(enA, 80);
+    analogWrite(enB, 80);
 
     left_start = read_sound(leftTrigPin, leftEchoPin);
     right_start = read_sound(rightTrigPin, rightEchoPin);
 }
+
+
+
 
 void loop()
 {   
@@ -75,26 +79,26 @@ void loop()
     right_distance = read_sound(rightTrigPin, rightEchoPin);
     
     if (forward_distance >= forward) {
-        forwards();
+        drive_forwards();
         delay(200);
     } else {
         if (left_distance > (left_start+10)) {
-            left();
+            drive_left();
             delay(1000);
-            forwards();
+            drive_forwards();
             delay(1000);
         }
         else if (right_distance > (right_start+10)) {
-            right();
+            drive_right();
             delay(1000);
-            forwards();
+            drive_forwards();
             delay(1000);
         }
     }
 }
  
 //####################################################################################################
-void forwards() 
+void drive_forwards() 
 {
     // Set Motor A forward
     digitalWrite(in1, HIGH);
@@ -106,7 +110,7 @@ void forwards()
 }
  
 
-void backwards() 
+void drive_backwards() 
 {  
     // Set Motor A reverse
     digitalWrite(in1, LOW);
@@ -118,7 +122,7 @@ void backwards()
 }
  
 
-void right() 
+void drive_right() 
 {   
     // Set Motor A reverse
     digitalWrite(in1, LOW);
@@ -130,7 +134,7 @@ void right()
 }
 
 
-void left() 
+void drive_left() 
 {
     // Set Motor A forward
     digitalWrite(in1, HIGH);
@@ -141,7 +145,7 @@ void left()
     digitalWrite(in4, HIGH);
 }
 
-void stop()
+void drive_stop()
 {
     // Set Motor A forward
     digitalWrite(in1, LOW);
